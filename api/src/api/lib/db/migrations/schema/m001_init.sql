@@ -1,0 +1,5 @@
+CREATE TABLE ping (
+	   id TEXT NOT NULL PRIMARY KEY,
+	   data TEXT NOT NULL,
+	   timestamp DATETIME NOT NULL
+);

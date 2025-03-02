@@ -1,0 +1,36 @@
+.PHONY: lint
+lint:
+	 poetry run mypy \
+		--check-untyped-defs \
+		src/flashmob
+
+.PHONY: format
+format:
+	poetry run isort \
+		--tc \
+		--profile=black \
+		src/flashmob
+	poetry run black \
+		src/flashmob
+
+.PHONY: debug
+debug: export DEBUG = 1
+debug: export SERVER_HOST = 0.0.0.0
+debug: export SERVER_PORT = 4173
+debug: export DB_URL = sqlite:///$(shell pwd)/local/test.db
+debug:
+	mkdir -p local
+	poetry run api
+
+.PHONY: build
+build:
+	poetry build -f wheel
+
+.PHONY: docker
+docker: VERSION = $$(bump-my-version show --config-file ../.bumpversion.toml current_version)
+docker: build
+	docker build . \
+		--network host \
+		--build-arg "API_VERSION=${VERSION}" \
+		-t "{{ project_slug }}-api:${VERSION}" \
+		-t "{{ project_slug }}-api:latest"

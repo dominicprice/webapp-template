@@ -1,0 +1,19 @@
+from api.server.routes import router
+from api.lib.config import DEBUG
+from fastapi import FastAPI
+from fastapi.routing import APIRoute
+from pydantic.alias_generators import to_camel
+
+
+app = FastAPI(
+    debug=DEBUG,
+    title="{{ project_name }} API",
+    description="{{ project_description }}",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
+)
+
+app.include_router(router)
+for route in app.routes:
+    if isinstance(route, APIRoute):
+        route.operation_id = to_camel(route.name)

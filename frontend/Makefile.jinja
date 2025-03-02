@@ -1,0 +1,24 @@
+.PHONY: lint
+lint:
+	npm run lint
+
+.PHONY: format
+format:
+	npm run format
+
+.PHONY: debug
+debug:
+	npm run dev
+
+.PHONY: build
+build:
+	npm run build
+
+.PHONY: docker
+docker: VERSION = $$(bump-my-version show --config-file ../.bumpversion.toml current_version)
+docker: build
+	docker build . \
+		--network host \
+		-t "{{ project-slug }}-frontend:${VERSION}" \
+		-t "{{ project-slug }}-frontend:latest"
+

@@ -1,0 +1,43 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## Developing
+
+The app is separated into the following components:
+
+### `api`
+
+The `api` subdirectory contains a [Python](https://www.python.org)
+server which is used to serve the API for the webapp. The project is
+build on the following libraries:
+
+* [uvicorn](https://www.uvicorn.org/) is used as the ASGI web server
+  to serve the api [FastAPI](https://fastapi.tiangolo.com/) is used
+* for the server [sqlite3](https://www.sqlite.org/) is used as a
+* database [sqlmodel](https://sqlmodel.tiangolo.com/) is used as an
+  ORM for the database
+* [sqlacodegen](https://github.com/agronholm/sqlacodegen) is used to
+  generate the ORM models from the database schema
+
+### `frontend`
+
+The `frontend` subdirectory contains a [React](https://react.dev/) project
+for the frontend of the webapp. The project is build on the following libraries:
+* [vite](https://vite.dev/) as the build tool
+* [tailwindcss](https://tailwindcss.com/) as a CSS library
+* [hey-api](https://heyapi.dev/) to generate the SDK for the api
+
+### `scripts`
+
+The `scripts` subdirectory contains various scripts to help with the development lifecycle. Passing `-h` (or `--help`) as an argument to any script will print a help message detailing usage of the script.
+
+* `scripts/genlogo.sh`: Generates logos in different sizes and formats for the frontend
+* `scripts/genmodels.sh`: Generates ORM models from the defined database schema
+
+### Make targets
+
+The `Makefile` defines several targets:
+
+* `make debug`: Runs development api and frontend servers in tmux for local development
+* `make docker`: Builds docker containers for the api and frontend
