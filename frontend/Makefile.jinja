@@ -19,6 +19,6 @@ docker: VERSION = $$(bump-my-version show --config-file ../.bumpversion.toml cur
 docker: build
 	docker build . \
 		--network host \
-		-t "{{ project-slug }}-frontend:${VERSION}" \
-		-t "{{ project-slug }}-frontend:latest"
+		-t "{{ project_slug }}-frontend:${VERSION}" \
+		-t "{{ project_slug }}-frontend:latest"
 
